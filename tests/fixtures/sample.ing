@@ -1,0 +1,4 @@
+fn x() {
+ system[5,11](201, 10@"<#E_2#M_4>", 11@"Hello,", 10, "world!");
+ M_SELECTION_CHR(-1, -1, 12@"Yes.", 13@"No.");
+}

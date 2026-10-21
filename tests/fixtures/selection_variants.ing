@@ -1,0 +1,7 @@
+fn x() {
+ M_SELECTION_CHR_NO_CURSOR(-1, -1, 12@"First choice", 13@"Second choice");
+ M_SELECTION_CHR_ENABLE_CANCEL(-1, -1, 14@"Third choice");
+ system[5,4](65535, "<C1>Obtained ", 17, item_name, ".");
+ system[5,22](100, 101, -1.0, "avfc0010", 0, 0, "Move to", 10, "the next island!");
+ M_MENU_YESNO_OPEN("Use this item?", "Yes", "No");
+}
