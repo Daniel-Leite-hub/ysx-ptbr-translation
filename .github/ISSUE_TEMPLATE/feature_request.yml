@@ -1,0 +1,22 @@
+name: Sugerir melhoria
+description: Sugira uma melhoria para o Studio ou para a distribuição.
+title: "[Sugestão] "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema ou necessidade
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposta
+      description: Explique a solução desejada e o impacto esperado.
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: Não inclua arquivos originais do jogo, bancos completos, saves ou credenciais.

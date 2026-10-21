@@ -8,7 +8,7 @@ Projeto independente, não oficial e sem vínculo com os titulares do jogo. Requ
 
 ## Quero apenas instalar a tradução
 
-Na seção **Releases** deste repositório, quando o responsável disponibilizar os arquivos, escolha **uma** alternativa:
+Na [Release mais recente](https://github.com/Daniel-Leite-hub/ysx-ptbr-translation/releases/latest) deste repositório, escolha **uma** alternativa:
 
 | Opção | Como usar | Como desfazer |
 | --- | --- | --- |

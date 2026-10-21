@@ -1,0 +1,43 @@
+name: Relatar problema
+description: Relate um erro de tradução, instalação ou compatibilidade.
+title: "[Problema] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Não inclua chaves, saves, arquivos originais do jogo ou bancos pessoais.
+  - type: input
+    id: version
+    attributes:
+      label: Versão da Release
+      placeholder: v1.0.3-r10
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área afetada
+      options:
+        - Tradução
+        - Instalador EXE
+        - Pacote ZIP
+        - Studio
+        - Compatibilidade
+        - Outra
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Descrição e reprodução
+      description: Informe o local, os passos e o resultado esperado.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Ambiente
+      description: Informe Windows, edição/build compatível e modo de instalação.
+    validations:
+      required: true
