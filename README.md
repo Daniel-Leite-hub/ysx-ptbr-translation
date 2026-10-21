@@ -121,13 +121,13 @@ frontend/          Interface do Studio
 applicator_src/    Código C# dos aplicadores
 tests/             Testes e fixtures pequenas
 tools/             Auditoria e geração
-docs/              Arquitetura, estudo técnico e apresentação
+docs/              Arquitetura, estudo técnico e validação
 .github/workflows/ Testes automatizados do repositório
 ```
 
 ## Portfólio e contribuição
 
-O projeto demonstra integração de sistemas, investigação de formatos, persistência e rastreabilidade, validação de dados, testes automatizados e distribuição Windows. A documentação de estudo inclui [arquitetura](docs/ARQUITETURA.md), [estudo técnico](docs/ESTUDO_TECNICO.md) e [roteiro de apresentação](docs/ROTEIRO_APRESENTACAO.md).
+O projeto demonstra integração de sistemas, investigação de formatos, persistência e rastreabilidade, validação de dados, testes automatizados e distribuição Windows. A documentação de estudo inclui [arquitetura](docs/ARQUITETURA.md), [estudo técnico](docs/ESTUDO_TECNICO.md) e [validação](docs/VALIDACAO.md).
 
 Para relatar um problema, informe a versão, o local/cena, o ID do texto quando disponível e o comportamento esperado. Não inclua chaves, saves pessoais, banco completo ou arquivos originais do jogo.
 
