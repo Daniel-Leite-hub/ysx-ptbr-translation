@@ -902,12 +902,18 @@ def compile_mod(game_dir: Path, build_source_dir: Path, output_dir: Path, files:
             if progress:
                 progress(index, len(files), source.name)
             continue
-        destination = scena_dir / f"{source.stem}.dat"
+        relative = source.relative_to(build_source_dir)
+        if relative.parts and relative.parts[0].lower() == "ani":
+            destination = loose_root / "script_eng" / "ani" / f"{source.stem}.dat"
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            verify_path = output_dir / "verify" / "ani" / f"{source.stem}.ing"
+        else:
+            destination = scena_dir / f"{source.stem}.dat"
+            verify_path = output_dir / "verify" / f"{source.stem}.ing"
         run_tool([str(ingert), str(source), "-o", str(destination)])
         # Compilation followed by decompilation is a practical structural check.
-        check = output_dir / "verify" / f"{source.stem}.ing"
-        check.parent.mkdir(parents=True, exist_ok=True)
-        run_tool([str(ingert), str(destination), "--roundtrip", "-o", str(check)])
+        verify_path.parent.mkdir(parents=True, exist_ok=True)
+        run_tool([str(ingert), str(destination), "--roundtrip", "-o", str(verify_path)])
         if progress:
             progress(index, len(files), source.name)
     packaged_roots = ["script_eng"]

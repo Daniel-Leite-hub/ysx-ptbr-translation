@@ -253,7 +253,74 @@ def sync_script_catalog(db: sqlite3.Connection, project_path: Path,
     game_dir = Path(get_meta(db, "game_dir"))
     with db:
         cinematic_added = sync_cinematics(db, project_path, game_dir)
-    return {"added": len(added) + cinematic_added, "reused": reused}
+    animation_result = sync_animation_catalog(db, project_path, reject_larger)
+    return {"added": len(added) + cinematic_added + animation_result["added"],
+            "reused": reused + animation_result["reused"]}
+
+
+def sync_animation_catalog(db: sqlite3.Connection, project_path: Path,
+                           reject_larger: bool = False) -> dict[str, int]:
+    """Catalogs combat dialogue embedded in identified animation scripts.
+
+    The source list is intentionally explicit. Rows keep offsets from the
+    decompiled `.ing` and use an `ani/` identity to avoid collisions with
+    same-named scene scripts.
+    """
+    from dataclasses import replace
+
+    game_dir = Path(get_meta(db, "game_dir"))
+    source_dir = game_dir / "script_eng" / "ani"
+    if not source_dir.is_dir():
+        raise core.StudioError(f"Animation script directory not found: {source_dir}")
+    decompiled = Path(get_meta(db, "decompiled_dir", project_path.with_suffix("") / "decompiled"))
+    destination = decompiled / "ani"
+    destination.mkdir(parents=True, exist_ok=True)
+    resources = ("b0080", "b0200_common", "b0400", "b0410", "b1090")
+    ingert = core.find_tool("ingert.exe", game_dir)
+    added = []
+    with db:
+        for stem in resources:
+            source = source_dir / f"{stem}.dat"
+            if not source.is_file():
+                continue
+            output = destination / f"{stem}.ing"
+            core.run_tool([str(ingert), str(source), "--roundtrip", "-o", str(output)])
+            rows = [replace(row, file_name=f"ani/{output.name}")
+                    for row in core.extract_file(output)]
+            identity = f"ani/{output.name}"
+            existing = {(row["file_name"], row["source_start"], row["source_end"])
+                        for row in db.execute(
+                            "SELECT file_name,source_start,source_end FROM dialogues WHERE file_name=?",
+                            (identity,))}
+            added.extend(row for row in rows
+                         if (row.file_name, row.source_start, row.source_end) not in existing)
+            _upsert_extracted(db, rows)
+
+        reusable: dict[str, set[str]] = {}
+        for row in db.execute("SELECT original,translation FROM dialogues WHERE translation<>''"):
+            reusable.setdefault(row["original"], set()).add(row["translation"])
+        reused = 0
+        for row in added:
+            candidates = reusable.get(row.original, set())
+            if len(candidates) != 1:
+                continue
+            translation = core.normalize_text_for_kind(next(iter(candidates)), row.kind, row.context)
+            size, width, lines, error, ok = core.validate_text(
+                row.original, translation, reject_larger, row.kind, row.context)
+            saved_at = _timestamp()
+            cursor = db.execute("""UPDATE dialogues SET translation=?,provider=?,translated_bytes=?,
+                translated_width=?,translated_lines=?,size_ok=?,error=?,updated_at=?,revision=revision+1
+                WHERE file_name=? AND source_start=? AND source_end=? AND translation='' AND reviewed=''""",
+                (translation, "reused-duplicate", size, width, lines, int(ok), error, saved_at,
+                 row.file_name, row.source_start, row.source_end))
+            if cursor.rowcount:
+                dialogue_id = db.execute("SELECT id FROM dialogues WHERE file_name=? AND source_start=? AND source_end=?",
+                                         (row.file_name, row.source_start, row.source_end)).fetchone()[0]
+                db.execute("INSERT INTO edit_history(dialogue_id,translation,reviewed,saved_at,source) VALUES(?,?,?,?,?)",
+                           (dialogue_id, translation, "", saved_at, "catalog_reuse"))
+                reused += 1
+        set_meta(db, "animation_catalog_version", 1)
+    return {"added": len(added), "reused": reused}
 
 
 def clear_automatic_translations(db: sqlite3.Connection) -> int:

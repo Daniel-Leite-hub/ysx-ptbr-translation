@@ -64,7 +64,7 @@ def run():
         print(url, flush=True); server.serve_forever(); return
     import webview
     threading.Thread(target=server.serve_forever, daemon=True).start()
-    window = webview.create_window("YS X • Translation Studio v2.3.4", url, width=1480, height=940,
+    window = webview.create_window("YS X • Translation Studio v2.3.5", url, width=1480, height=940,
                                    min_size=(1120, 720), background_color="#11131b")
     api.window = window
     webview.start()

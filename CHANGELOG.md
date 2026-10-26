@@ -2,6 +2,15 @@
 
 Este arquivo registra alterações funcionais, decisões técnicas, validações e pendências. Ele deve ser atualizado em toda nova versão distribuída.
 
+## 2.3.5 — catálogo de falas de combate — 25/10/2026
+
+- Incluída a leitura dos textos de combate presentes em cinco scripts de animação de `script_eng/ani`, mantendo os offsets e separando essa identidade dos scripts de cena.
+- A sincronização preserva traduções existentes e só reaproveita tradução idêntica quando há uma única opção; a revisão continua explícita por linha.
+- A reconstrução mantém esses recursos no caminho `script_eng/ani` do pacote, em vez de colocá-los junto aos scripts de cena.
+- Foram catalogadas 74 falas; 20 estavam revisadas e 54 permaneciam como rascunhos. O banco privado não é distribuído.
+- A compilação estrutural e a reinserção dos 74 textos foram conferidas no pacote local. A inspeção visual dessas falas no jogo continua pendente.
+- Esta atualização documenta o estado local; não significa publicação de uma Release nem envio ao GitHub.
+
 ## Campos internos da pesquisa marinha — 20/10/2026
 
 - Extração de `profile[].type` e `imressions[].text` sem renumerar os campos históricos da tabela.

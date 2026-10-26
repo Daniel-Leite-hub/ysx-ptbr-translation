@@ -25,7 +25,7 @@ As fontes nativas auditadas já contêm os acentos do português; não são redi
 
 ## Funcionalidades do Studio
 
-- Extração de scripts, tabelas de interface e legendas de cinemáticas Maya Scene.
+- Extração de scripts de cena e animação, tabelas de interface e legendas de cinemáticas Maya Scene.
 - Editor com original selecionável, tradução salva, texto revisado, histórico e validação individual.
 - Prioridade de exportação: texto revisado preenchido; na ausência dele, tradução salva.
 - Integração com DeepL Free/Pro, glossário e proteção de comandos e variáveis.
@@ -51,7 +51,7 @@ As fontes nativas auditadas já contêm os acentos do português; não são redi
 
 Fluxo principal: **extração → catálogo SQLite → tradução/revisão → validação → reconstrução → pacote → conferência no jogo**.
 
-O catálogo conhecido tem **45.184 registros**, incluindo **129 eventos de cinemáticas com 150 segmentos** e **105 campos internos de perfis/impressões da pesquisa marinha**. Essa contagem descreve o projeto local auditado; não demonstra cobertura absoluta de todos os recursos do jogo. O banco e os textos extraídos não estão neste repositório.
+O catálogo conhecido tem **45.258 registros**, incluindo **74 falas de combate em cinco scripts de animação**, **129 eventos de cinemáticas com 150 segmentos** e **105 campos internos de perfis/impressões da pesquisa marinha**. Essa contagem descreve o projeto local auditado; não demonstra cobertura absoluta de todos os recursos do jogo. O banco e os textos extraídos não estão neste repositório. Na atualização de 25/10/2026, 20 das 74 falas de animação estavam revisadas; as demais permaneciam como rascunhos.
 
 ## Decisões e problemas resolvidos
 
@@ -98,7 +98,7 @@ Depois de fornecer as dependências externas:
 .\.venv\Scripts\python.exe -m PyInstaller --noconfirm YsX_PTBR_Studio.spec
 ```
 
-O resultado fica em `dist/YsX_PTBR_Studio_v2.3.4/`. **Não separe o EXE da pasta `_internal`**. Para criar o instalador da tradução pelo Studio, é necessário o compilador do .NET Framework 4.x no Windows.
+O resultado fica em `dist/YsX_PTBR_Studio_v2.3.5/`. **Não separe o EXE da pasta `_internal`**. Para criar o instalador da tradução pelo Studio, é necessário o compilador do .NET Framework 4.x no Windows.
 
 ## Testes e limitações conhecidas
 

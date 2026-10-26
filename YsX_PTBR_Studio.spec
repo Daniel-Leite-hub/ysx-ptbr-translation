@@ -12,6 +12,6 @@ a = Analysis(['main.py'], pathex=[str(root)],
            (str(root/'THIRD_PARTY_LICENSES.md'), '.'), (str(root/'README.md'), '.')],
     hiddenimports=[], hookspath=[], hooksconfig={}, runtime_hooks=[], excludes=[], noarchive=False)
 pyz = PYZ(a.pure)
-exe = EXE(pyz, a.scripts, [], exclude_binaries=True, name='YsX_PTBR_Studio_v2.3.4',
+exe = EXE(pyz, a.scripts, [], exclude_binaries=True, name='YsX_PTBR_Studio_v2.3.5',
           debug=False, bootloader_ignore_signals=False, strip=False, upx=True, console=False)
-coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=True, name='YsX_PTBR_Studio_v2.3.4')
+coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=True, name='YsX_PTBR_Studio_v2.3.5')
